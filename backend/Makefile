@@ -1,5 +1,10 @@
 .PHONY: help install run dev test clean format lint check activate_env
 
+DB_NOMBRE_DEL_DUMP= ~/Dropbox/Trabajo/TracMyNexStep/Backups/backup_`date +'%Y%m%d_%Hhs%Mmin'`.dump
+DB_DUMP_MAS_RECIENTE=`ls -Art ~/Dropbox/Trabajo/TracMyNexStep/Backups/backup_*.dump  | tail -n 1`
+NOMBRE_BD=track_my_nex_step
+
+
 # Variables
 PYTHON := uv run python
 FASTAPI := uv run fastapi
@@ -66,3 +71,13 @@ clean: ## Limpiar archivos temporales y cache
 activate_env: ## Mostrar comando para activar el entorno virtual
 	@echo "$(CYAN)💡 Para activar el entorno virtual, ejecuta:$(RESET)"
 	@echo "$(YELLOW)   source .venv/bin/activate$(RESET)"
+
+reset:
+	@dropdb --if-exists ${NOMBRE_BD} -e; createdb ${NOMBRE_BD}
+	@uv run alembic upgrade head
+	@uv run python app/initial_data.py
+
+
+realizar_backup:
+	@echo "Creando el archivo ${DB_NOMBRE_DEL_DUMP}"
+	@pg_dump -F c ${NOMBRE_BD} > ${DB_NOMBRE_DEL_DUMP}
