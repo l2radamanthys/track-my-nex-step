@@ -18,8 +18,14 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-from app.models.items import SQLModel  # noqa
+from app.models import SQLModel  # noqa
 from app.core.config import settings # noqa
+from app.models.users import User
+from app.models.items import Item
+from app.models.roles import Role
+from app.models.permisions import Permission
+from app.models.user_role_links import UserRoleLink
+from app.models.role_permission_links import RolePermissionLink
 
 target_metadata = SQLModel.metadata
 

@@ -9,6 +9,7 @@ NOMBRE_BD=track_my_nex_step
 PYTHON := uv run python
 FASTAPI := uv run fastapi
 APP_PATH := app/main.py
+ALEMBIC := uv run alembic
 
 # Colores
 RESET := \033[0m
@@ -74,9 +75,14 @@ activate_env: ## Mostrar comando para activar el entorno virtual
 
 reset:
 	@dropdb --if-exists ${NOMBRE_BD} -e; createdb ${NOMBRE_BD}
-	@uv run alembic upgrade head
-	@uv run python app/initial_data.py
+	@$(ALEMBIC) upgrade head
+	@$(PYTHON) app/initial_data.py
 
+revision:
+	@$(ALEMBIC) revision --autogenerate -m "$(message)"
+
+migrate:
+	@$(ALEMBIC) upgrade head
 
 realizar_backup:
 	@echo "Creando el archivo ${DB_NOMBRE_DEL_DUMP}"
