@@ -26,14 +26,13 @@ class Role(RoleBase, table=True):
 
 
 class RoleCreate(RoleBase):
-    permission_ids: list[int] = []
+    pass
 
 
 class RoleUpdate(SQLModel):
     name: str | None = None
     description: str | None = None
     is_active: bool | None = None
-    permission_ids: list[int] | None = None
 
 
 class RolePublic(RoleBase):
@@ -44,3 +43,8 @@ class RolePublic(RoleBase):
 
 # class RolePublicWithPermissions(RolePublic):
 #     permissions: list[PermissionPublic] = []
+
+
+class RolesPublic(SQLModel):
+    data: list[RolePublic]
+    count: int
