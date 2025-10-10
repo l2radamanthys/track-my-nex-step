@@ -78,6 +78,9 @@ reset:
 	@$(ALEMBIC) upgrade head
 	@$(PYTHON) app/initial_data.py
 
+initial_data:
+	@$(PYTHON) app/initial_data.py
+
 revision:
 	@$(ALEMBIC) revision --autogenerate -m "$(message)"
 
