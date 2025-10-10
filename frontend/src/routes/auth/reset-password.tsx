@@ -15,7 +15,7 @@ interface NewPasswordForm extends NewPassword {
   confirm_password: string
 }
 
-export const Route = createFileRoute("/reset-password")({
+export const Route = createFileRoute("/auth/reset-password")({
   component: ResetPassword,
   beforeLoad: async () => {
     if (isLoggedIn()) {

@@ -13,7 +13,7 @@ import {
   DrawerContent,
   DrawerRoot,
   DrawerTrigger,
-} from "../ui/drawer"
+} from "../../ui/drawer"
 import SidebarItems from "./SidebarItems"
 
 const Sidebar = () => {

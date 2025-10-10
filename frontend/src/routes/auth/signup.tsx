@@ -16,7 +16,7 @@ import useAuth, { isLoggedIn } from "@/hooks/useAuth"
 import { confirmPasswordRules, emailPattern, passwordRules } from "@/utils"
 import Logo from "/assets/images/fastapi-logo.svg"
 
-export const Route = createFileRoute("/signup")({
+export const Route = createFileRoute("/auth/signup")({
   component: SignUp,
   beforeLoad: async () => {
     if (isLoggedIn()) {

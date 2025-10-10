@@ -1,16 +1,12 @@
 import { Flex, Image, useBreakpointValue } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
+
 import Logo from "/assets/images/fastapi-logo.svg"
-import AppMenu from "./AppMenu"
+import UserMenu from "./UserMenu"
 
-
-const Navbar = () => {  
+function Navbar() {
   const display = useBreakpointValue({ base: "none", md: "flex" })
 
-    const handleLogout = async () => {
-    logout()
-  };
-  
   return (
     <Flex
       display={display}
@@ -27,10 +23,10 @@ const Navbar = () => {
         <Image src={Logo} alt="Logo" maxW="3xs" p={2} />
       </Link>
       <Flex gap={2} alignItems="center">
-        <AppMenu />
+        <UserMenu />
       </Flex>
     </Flex>
   )
 }
 
-export default Navbar;
+export default Navbar

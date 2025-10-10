@@ -14,11 +14,11 @@ const tabsConfig = [
   { value: "danger-zone", title: "Danger zone", component: DeleteAccount },
 ]
 
-export const Route = createFileRoute("/_layout/settings")({
-  component: UserSettings,
+export const Route = createFileRoute('/user/profile')({
+  component: UserProfile,
 })
 
-function UserSettings() {
+function UserProfile() {
   const { user: currentUser } = useAuth()
   const finalTabs = currentUser?.is_superuser
     ? tabsConfig.slice(0, 3)

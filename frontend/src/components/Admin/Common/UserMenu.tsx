@@ -4,7 +4,7 @@ import { FaUserAstronaut } from "react-icons/fa"
 import { FiLogOut, FiUser } from "react-icons/fi"
 
 import useAuth from "@/hooks/useAuth"
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu"
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../../ui/menu"
 
 const UserMenu = () => {
   const { user, logout } = useAuth()
