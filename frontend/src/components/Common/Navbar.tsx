@@ -6,11 +6,6 @@ import AppMenu from "./AppMenu"
 
 const Navbar = () => {  
   const display = useBreakpointValue({ base: "none", md: "flex" })
-
-    const handleLogout = async () => {
-    logout()
-  };
-  
   return (
     <Flex
       display={display}

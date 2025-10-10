@@ -13,8 +13,6 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 const AppMenu = () => {
   const { user, logout } = useAuth();
 
-  console.log("user", user);
-
   const handleLogout = () => {
     logout();
   };
@@ -53,6 +51,32 @@ const AppMenu = () => {
                   >
                     <FiUser fontSize="18px" />
                     <Box flex="1">My Profile</Box>
+                  </MenuItem>
+                </Link>
+
+                <Link to="/user/appearance">
+                  <MenuItem
+                    closeOnSelect
+                    value="user-settings"
+                    gap={2}
+                    py={2}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FiUser fontSize="18px" />
+                    <Box flex="1">Appeareance</Box>
+                  </MenuItem>
+                </Link>
+
+                <Link to="/user/change-password">
+                  <MenuItem
+                    closeOnSelect
+                    value="user-settings"
+                    gap={2}
+                    py={2}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FiUser fontSize="18px" />
+                    <Box flex="1">Change Password</Box>
                   </MenuItem>
                 </Link>
 

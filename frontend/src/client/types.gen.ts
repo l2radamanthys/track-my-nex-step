@@ -73,6 +73,8 @@ export type UserPublic = {
     email: string;
     is_active?: boolean;
     is_superuser?: boolean;
+    first_name?: (string | null);
+    last_name?: (string | null);
     full_name?: (string | null);
     id: string;
 };
@@ -92,12 +94,14 @@ export type UserUpdate = {
     email?: (string | null);
     is_active?: boolean;
     is_superuser?: boolean;
-    full_name?: (string | null);
+    first_name?: (string | null);
+    last_name?: (string | null);
     password?: (string | null);
 };
 
 export type UserUpdateMe = {
-    full_name?: (string | null);
+    first_name?: (string | null);
+    last_name?: (string | null);
     email?: (string | null);
 };
 

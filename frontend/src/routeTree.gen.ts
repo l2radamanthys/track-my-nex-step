@@ -9,11 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UserRouteImport } from './routes/user'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as UserProfileEditRouteImport } from './routes/user/profile-edit'
 import { Route as UserProfileRouteImport } from './routes/user/profile'
+import { Route as UserChangePasswordRouteImport } from './routes/user/change-password'
+import { Route as UserAppearanceRouteImport } from './routes/user/appearance'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthRecoverPasswordRouteImport } from './routes/auth/recover-password'
@@ -22,6 +27,11 @@ import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
 import { Route as AdminRolesIndexRouteImport } from './routes/admin/roles/index'
 
+const UserRoute = UserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -36,15 +46,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const UserProfileEditRoute = UserProfileEditRouteImport.update({
+  id: '/profile-edit',
+  path: '/profile-edit',
+  getParentRoute: () => UserRoute,
+} as any)
 const UserProfileRoute = UserProfileRouteImport.update({
-  id: '/user/profile',
-  path: '/user/profile',
-  getParentRoute: () => rootRouteImport,
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => UserRoute,
+} as any)
+const UserChangePasswordRoute = UserChangePasswordRouteImport.update({
+  id: '/change-password',
+  path: '/change-password',
+  getParentRoute: () => UserRoute,
+} as any)
+const UserAppearanceRoute = UserAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => UserRoute,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup',
@@ -85,25 +115,35 @@ const AdminRolesIndexRoute = AdminRolesIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/user/appearance': typeof UserAppearanceRoute
+  '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
+  '/user/profile-edit': typeof UserProfileEditRoute
   '/admin/': typeof AdminIndexRoute
+  '/auth': typeof AuthIndexRoute
   '/admin/roles': typeof AdminRolesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/user/appearance': typeof UserAppearanceRoute
+  '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
+  '/user/profile-edit': typeof UserProfileEditRoute
   '/admin': typeof AdminIndexRoute
+  '/auth': typeof AuthIndexRoute
   '/admin/roles': typeof AdminRolesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
@@ -112,13 +152,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_public': typeof PublicRoute
   '/admin': typeof AdminRouteWithChildren
+  '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/user/appearance': typeof UserAppearanceRoute
+  '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
+  '/user/profile-edit': typeof UserProfileEditRoute
   '/admin/': typeof AdminIndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/admin/roles/': typeof AdminRolesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
@@ -127,25 +172,35 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/user'
     | '/admin/dashboard'
     | '/auth/login'
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/user/appearance'
+    | '/user/change-password'
     | '/user/profile'
+    | '/user/profile-edit'
     | '/admin/'
+    | '/auth'
     | '/admin/roles'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/user'
     | '/admin/dashboard'
     | '/auth/login'
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/user/appearance'
+    | '/user/change-password'
     | '/user/profile'
+    | '/user/profile-edit'
     | '/admin'
+    | '/auth'
     | '/admin/roles'
     | '/admin/users'
   id:
@@ -153,13 +208,18 @@ export interface FileRouteTypes {
     | '/'
     | '/_public'
     | '/admin'
+    | '/user'
     | '/admin/dashboard'
     | '/auth/login'
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/user/appearance'
+    | '/user/change-password'
     | '/user/profile'
+    | '/user/profile-edit'
     | '/admin/'
+    | '/auth/'
     | '/admin/roles/'
     | '/admin/users/'
   fileRoutesById: FileRoutesById
@@ -168,15 +228,23 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublicRoute: typeof PublicRoute
   AdminRoute: typeof AdminRouteWithChildren
+  UserRoute: typeof UserRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRecoverPasswordRoute: typeof AuthRecoverPasswordRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
-  UserProfileRoute: typeof UserProfileRoute
+  AuthIndexRoute: typeof AuthIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -198,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -205,12 +280,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/user/profile-edit': {
+      id: '/user/profile-edit'
+      path: '/profile-edit'
+      fullPath: '/user/profile-edit'
+      preLoaderRoute: typeof UserProfileEditRouteImport
+      parentRoute: typeof UserRoute
+    }
     '/user/profile': {
       id: '/user/profile'
-      path: '/user/profile'
+      path: '/profile'
       fullPath: '/user/profile'
       preLoaderRoute: typeof UserProfileRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof UserRoute
+    }
+    '/user/change-password': {
+      id: '/user/change-password'
+      path: '/change-password'
+      fullPath: '/user/change-password'
+      preLoaderRoute: typeof UserChangePasswordRouteImport
+      parentRoute: typeof UserRoute
+    }
+    '/user/appearance': {
+      id: '/user/appearance'
+      path: '/appearance'
+      fullPath: '/user/appearance'
+      preLoaderRoute: typeof UserAppearanceRouteImport
+      parentRoute: typeof UserRoute
     }
     '/auth/signup': {
       id: '/auth/signup'
@@ -280,15 +376,32 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface UserRouteChildren {
+  UserAppearanceRoute: typeof UserAppearanceRoute
+  UserChangePasswordRoute: typeof UserChangePasswordRoute
+  UserProfileRoute: typeof UserProfileRoute
+  UserProfileEditRoute: typeof UserProfileEditRoute
+}
+
+const UserRouteChildren: UserRouteChildren = {
+  UserAppearanceRoute: UserAppearanceRoute,
+  UserChangePasswordRoute: UserChangePasswordRoute,
+  UserProfileRoute: UserProfileRoute,
+  UserProfileEditRoute: UserProfileEditRoute,
+}
+
+const UserRouteWithChildren = UserRoute._addFileChildren(UserRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRoute,
   AdminRoute: AdminRouteWithChildren,
+  UserRoute: UserRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthRecoverPasswordRoute: AuthRecoverPasswordRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSignupRoute: AuthSignupRoute,
-  UserProfileRoute: UserProfileRoute,
+  AuthIndexRoute: AuthIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
