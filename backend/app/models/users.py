@@ -1,6 +1,6 @@
 import uuid
 
-from pydantic import EmailStr
+from pydantic import EmailStr, computed_field
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -53,6 +53,13 @@ class User(UserBase, table=True):
 class UserPublic(UserBase):
     id: uuid.UUID
 
+    @computed_field
+    @property
+    def full_name(self) -> str:
+        """Devuelve el nombre completo o vacío si falta alguno."""
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return self.first_name or self.last_name or ""
 
 class UsersPublic(SQLModel):
     data: list[UserPublic]
