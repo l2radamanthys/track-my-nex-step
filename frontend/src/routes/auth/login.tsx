@@ -13,8 +13,8 @@ import { Field } from "@/components/ui/field"
 import { InputGroup } from "@/components/ui/input-group"
 import { PasswordInput } from "@/components/ui/password-input"
 import useAuth, { isLoggedIn } from "@/hooks/useAuth"
-import Logo from "/assets/images/fastapi-logo.svg"
 import { emailPattern, passwordRules } from "@/utils"
+import Logo from "/assets/images/fastapi-logo.svg"
 
 export const Route = createFileRoute("/auth/login")({
   component: Login,

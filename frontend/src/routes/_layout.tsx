@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react"
 import { createFileRoute, Outlet } from "@tanstack/react-router"
 import Navbar from "@/components/Common/Navbar"
 
-export const Route = createFileRoute("/user")({
+export const Route = createFileRoute("/_layout")({
   component: Layout,
 })
 

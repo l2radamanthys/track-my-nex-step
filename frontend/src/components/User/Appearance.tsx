@@ -9,7 +9,7 @@ const Appearance = () => {
   return (
     <Container maxW="full">
       <Heading size="sm" py={4}>
-        Appearance
+        Theme
       </Heading>
 
       <RadioGroup

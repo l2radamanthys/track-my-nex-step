@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text } from "@chakra-ui/react"
+import { Box, Container, Text } from "@chakra-ui/react"
 import useAuth from "@/hooks/useAuth"
 
 const UserInformationView = () => {

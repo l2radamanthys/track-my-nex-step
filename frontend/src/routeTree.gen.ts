@@ -11,10 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserRouteImport } from './routes/user'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as PublicRouteImport } from './routes/_public'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as UserProfileEditRouteImport } from './routes/user/profile-edit'
 import { Route as UserProfileRouteImport } from './routes/user/profile'
 import { Route as UserChangePasswordRouteImport } from './routes/user/change-password'
@@ -37,13 +37,8 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicRoute = PublicRouteImport.update({
-  id: '/_public',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const LayoutRoute = LayoutRouteImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthIndexRoute = AuthIndexRouteImport.update({
@@ -55,6 +50,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const LayoutIndexRoute = LayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LayoutRoute,
 } as any)
 const UserProfileEditRoute = UserProfileEditRouteImport.update({
   id: '/profile-edit',
@@ -113,7 +113,6 @@ const AdminRolesIndexRoute = AdminRolesIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -125,13 +124,13 @@ export interface FileRoutesByFullPath {
   '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
   '/user/profile-edit': typeof UserProfileEditRoute
+  '/': typeof LayoutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
   '/admin/roles': typeof AdminRolesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
@@ -142,6 +141,7 @@ export interface FileRoutesByTo {
   '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
   '/user/profile-edit': typeof UserProfileEditRoute
+  '/': typeof LayoutIndexRoute
   '/admin': typeof AdminIndexRoute
   '/auth': typeof AuthIndexRoute
   '/admin/roles': typeof AdminRolesIndexRoute
@@ -149,8 +149,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_public': typeof PublicRoute
+  '/_layout': typeof LayoutRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/user': typeof UserRouteWithChildren
   '/admin/dashboard': typeof AdminDashboardRoute
@@ -162,6 +161,7 @@ export interface FileRoutesById {
   '/user/change-password': typeof UserChangePasswordRoute
   '/user/profile': typeof UserProfileRoute
   '/user/profile-edit': typeof UserProfileEditRoute
+  '/_layout/': typeof LayoutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/admin/roles/': typeof AdminRolesIndexRoute
@@ -170,7 +170,6 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/admin'
     | '/user'
     | '/admin/dashboard'
@@ -182,13 +181,13 @@ export interface FileRouteTypes {
     | '/user/change-password'
     | '/user/profile'
     | '/user/profile-edit'
+    | '/'
     | '/admin/'
     | '/auth'
     | '/admin/roles'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/user'
     | '/admin/dashboard'
     | '/auth/login'
@@ -199,14 +198,14 @@ export interface FileRouteTypes {
     | '/user/change-password'
     | '/user/profile'
     | '/user/profile-edit'
+    | '/'
     | '/admin'
     | '/auth'
     | '/admin/roles'
     | '/admin/users'
   id:
     | '__root__'
-    | '/'
-    | '/_public'
+    | '/_layout'
     | '/admin'
     | '/user'
     | '/admin/dashboard'
@@ -218,6 +217,7 @@ export interface FileRouteTypes {
     | '/user/change-password'
     | '/user/profile'
     | '/user/profile-edit'
+    | '/_layout/'
     | '/admin/'
     | '/auth/'
     | '/admin/roles/'
@@ -225,8 +225,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PublicRoute: typeof PublicRoute
+  LayoutRoute: typeof LayoutRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
   UserRoute: typeof UserRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
@@ -252,18 +251,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public': {
-      id: '/_public'
+    '/_layout': {
+      id: '/_layout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof PublicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof LayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/': {
@@ -279,6 +271,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
     }
     '/user/profile-edit': {
       id: '/user/profile-edit'
@@ -360,6 +359,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LayoutRouteChildren {
+  LayoutIndexRoute: typeof LayoutIndexRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutIndexRoute: LayoutIndexRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
 interface AdminRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -393,8 +403,7 @@ const UserRouteChildren: UserRouteChildren = {
 const UserRouteWithChildren = UserRoute._addFileChildren(UserRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  PublicRoute: PublicRoute,
+  LayoutRoute: LayoutRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   UserRoute: UserRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,

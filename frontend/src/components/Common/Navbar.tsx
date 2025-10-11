@@ -3,8 +3,7 @@ import { Link } from "@tanstack/react-router"
 import Logo from "/assets/images/fastapi-logo.svg"
 import AppMenu from "./AppMenu"
 
-
-const Navbar = () => {  
+const Navbar = () => {
   const display = useBreakpointValue({ base: "none", md: "flex" })
   return (
     <Flex
@@ -28,4 +27,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar;
+export default Navbar
