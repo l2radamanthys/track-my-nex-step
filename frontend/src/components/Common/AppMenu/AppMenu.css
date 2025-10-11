@@ -1,0 +1,8 @@
+.AppMenu__link {
+  padding: 0.5rem 1rem;
+  color: black;
+}
+
+.AppMenu__link:hover {
+  background-color: var(--chakra-colors-gray-100);
+}

@@ -1,12 +1,20 @@
-import { Box, Container, Text } from "@chakra-ui/react"
-import useAuth from "@/hooks/useAuth"
+import { Box, Button, Text, Card } from "@chakra-ui/react";
+import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "@tanstack/react-router";
 
 const UserInformationView = () => {
-  const { user: currentUser } = useAuth()
+  const { user: currentUser } = useAuth();
+  const navigate = useNavigate();
+  const editMyProfile = () => {
+    navigate({ to: "/user/profile-edit" });
+  };
 
   return (
-    <Container maxW="full">
-      <Box w={{ sm: "full", md: "sm" }}>
+    <Card.Root w="full" maxW="lg" p={4} my={4} borderRadius="md">
+      <Card.Header>
+        <Card.Title>User Information</Card.Title>
+      </Card.Header>
+      <Card.Body>
         <Box mb={4}>
           <Text fontWeight="bold">First Name</Text>
           <Text
@@ -43,9 +51,12 @@ const UserInformationView = () => {
             {currentUser?.email || "N/A"}
           </Text>
         </Box>
-      </Box>
-    </Container>
-  )
-}
+      </Card.Body>
+      <Card.Footer>
+        <Button onClick={editMyProfile}>Edit my profile</Button>
+      </Card.Footer>
+    </Card.Root>
+  );
+};
 
-export default UserInformationView
+export default UserInformationView;
