@@ -6,16 +6,16 @@ import {
   Input,
   Text,
   VStack,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useState } from "react"
-import { Controller, type SubmitHandler, useForm } from "react-hook-form"
-import { FaPlus } from "react-icons/fa"
-import { type UserCreate, UsersService } from "@/client"
-import type { ApiError } from "@/client/core/ApiError"
-import useCustomToast from "@/hooks/useCustomToast"
-import { emailPattern, handleError } from "@/utils"
-import { Checkbox } from "../ui/checkbox"
+} from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import { FaPlus } from "react-icons/fa";
+import { type UserCreate, UsersService } from "@/client";
+import type { ApiError } from "@/client/core/ApiError";
+import useCustomToast from "@/hooks/useCustomToast";
+import { emailPattern, handleError } from "@/utils";
+import { Checkbox } from "../../ui/checkbox";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -24,17 +24,17 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTrigger,
-} from "../ui/dialog"
-import { Field } from "../ui/field"
+} from "../../ui/dialog";
+import { Field } from "../../ui/field";
 
 interface UserCreateForm extends UserCreate {
-  confirm_password: string
+  confirm_password: string;
 }
 
 const AddUser = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const queryClient = useQueryClient()
-  const { showSuccessToast } = useCustomToast()
+  const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const { showSuccessToast } = useCustomToast();
   const {
     control,
     register,
@@ -47,33 +47,34 @@ const AddUser = () => {
     criteriaMode: "all",
     defaultValues: {
       email: "",
-      full_name: "",
+      first_name: "",
+      last_name: "",
       password: "",
       confirm_password: "",
       is_superuser: false,
       is_active: false,
     },
-  })
+  });
 
   const mutation = useMutation({
     mutationFn: (data: UserCreate) =>
       UsersService.createUser({ requestBody: data }),
     onSuccess: () => {
-      showSuccessToast("User created successfully.")
-      reset()
-      setIsOpen(false)
+      showSuccessToast("User created successfully.");
+      reset();
+      setIsOpen(false);
     },
     onError: (err: ApiError) => {
-      handleError(err)
+      handleError(err);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] })
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     },
-  })
+  });
 
   const onSubmit: SubmitHandler<UserCreateForm> = (data) => {
-    mutation.mutate(data)
-  }
+    mutation.mutate(data);
+  };
 
   return (
     <DialogRoot
@@ -115,13 +116,25 @@ const AddUser = () => {
               </Field>
 
               <Field
-                invalid={!!errors.full_name}
-                errorText={errors.full_name?.message}
-                label="Full Name"
+                invalid={!!errors.first_name}
+                errorText={errors.first_name?.message}
+                label="First Name"
               >
                 <Input
-                  {...register("full_name")}
-                  placeholder="Full name"
+                  {...register("first_name")}
+                  placeholder="First name"
+                  type="text"
+                />
+              </Field>
+
+              <Field
+                invalid={!!errors.last_name}
+                errorText={errors.last_name?.message}
+                label="Last Name"
+              >
+                <Input
+                  {...register("last_name")}
+                  placeholder="Last name"
                   type="text"
                 />
               </Field>
@@ -219,7 +232,7 @@ const AddUser = () => {
         <DialogCloseTrigger />
       </DialogContent>
     </DialogRoot>
-  )
-}
+  );
+};
 
-export default AddUser
+export default AddUser;

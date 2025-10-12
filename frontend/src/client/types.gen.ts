@@ -65,7 +65,8 @@ export type UserCreate = {
   email: string;
   is_active?: boolean;
   is_superuser?: boolean;
-  full_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   password: string;
 };
 
@@ -96,6 +97,11 @@ export type UserUpdate = {
   is_superuser?: boolean;
   first_name?: string | null;
   last_name?: string | null;
+  password?: string | null;
+};
+
+export type UserUpdatePassword = {
+  email?: string | null;
   password?: string | null;
 };
 
